@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Manager</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/main.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper row purple">
+            <div class="col s1"></div>
+            <div class="col s10">
+                <a href="/app/" class="brand-logo">
+                    <i class="material-icons" style="font-size: 36px">arrow_back</i>
+                    Inventory App
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Title screen -->
+        <% if (item) { %>
+            <div id="viewer">
+                <br>
+                <h2 class="center-align">Item View</h2>
+                <form action="/app/item/<%= item.id %>/update" method="post">
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <input maxlength="32" name="name" value="<%= item.name %>" class="validate" required style="font-size: 2em" id="name" type="text">
+                            <label for="name">Item Name</label>
+                        </div>
+                        <div class="col s7"></div>
+                        <div class="input-field col s2">
+                            <input name="quantity" value="<%= item.quantity %>" class="validate" required id="quantity" type="number">
+                            <label for="quantity">Quantity</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea maxlength="400" id="description" class="materialize-textarea" name="description"
+                                type="text"><%= item.description || 1 %></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row center-align">
+                        <span style="color: gray; font-size: 0.9em">Last Modified: <%= new Date(item.lastModified).toLocaleDateString('en-US', { hour: "numeric", minute: "numeric", second: "numeric" }) %></span>
+                    </div>
+                    <br>
+                    <div class="center-align row">
+                        <div class="col s2"></div>
+                        <button type="submit" id="save-item" class="col s3 btn-small left blue waves-effect waves-light">
+                            <i class="material-icons right">save</i>
+                            Save
+                        </button>
+                        <div class="col s2"></div>
+                        <a id="delete-item" class="col s3 btn-small red waves-effect waves-light"
+                            href="/app/item/<%= item.id %>/delete">
+                            <i class="material-icons right">delete</i>
+                            Delete
+                        </a>
+                        <div class="col s2"></div>
+                    </div>
+                </form>
+            </div>
+        <% } else { %>
+            <div id="not-found">
+                <br>
+                <br>
+                <h2 class="center-align">Item Not Found</h2>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- <script src="./main.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
